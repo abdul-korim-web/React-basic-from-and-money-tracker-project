@@ -4,21 +4,32 @@ import { useRef, useState } from 'react';
 const BalanceTracker = () => {
     const [MainBalance,setMainBalance] = useState(0)
     const [Income,setIncome] = useState(0)
-    const [History,setHistory] = ([])
+    const [Expenses,setExpenses] = useState(0)
+    const [History,setHistory] = useState([]);
     let Time = new Date()
     
 
     // input filed
     let TransactionAmount = useRef()
     let TransactionDetails = useRef()
+    // add money
 
     let addBtn =()=>{
         setMainBalance(MainBalance + Number(TransactionAmount.current.value))
         setIncome(Income + Number(TransactionAmount.current.value))
-        setHistory([...History,{type:`income`,TransactioTime:Time.toLocaleString(),TransactionAmount:Number(TransactionAmount.current.value)}])
-
-
+        setHistory([...History,{type:`income`,TransactioTime:Time.toLocaleString(),TransactionAmount:Number(TransactionAmount.current.value),TransactionDetails:TransactionDetails.current.value}])
     }
+    // Expenses money
+    let expensesBtn = ()=>{
+       if (Number(TransactionAmount.current.value)>MainBalance){
+        alert("Not enough balance!")
+       } else{
+            setMainBalance(MainBalance- Number(TransactionAmount.current.value))
+            setExpenses(Expenses + Number(TransactionAmount.current.value))
+            setHistory([...History,{type:`Expenses`,TransactioTime:Time.toLocaleString(),TransactionAmount:Number(TransactionAmount.current.value),TransactionDetails:TransactionDetails.current.value}])
+       }
+    }
+
    
     return (
         <>
@@ -36,7 +47,7 @@ const BalanceTracker = () => {
                     </div>
                     <div className="Expenses flex flex-col items-center justify-center md:text-xl">
                         <h3>Expenses</h3>
-                        <h3>$</h3>
+                        <h3>${Expenses}</h3>
                     </div>
                 </div>
                 <form action="" className='mt-4 flex flex-col justify-center p-3 md:mt-6 ' onSubmit={(e)=>{e.preventDefault()}}>
@@ -44,11 +55,19 @@ const BalanceTracker = () => {
                     <input type="number" className='border border-gray-300 py-1 px-3 rounded-xl mt-2 ' ref={TransactionAmount}  placeholder='Amount' />
                     <div className='addorsum flex  space-x-2 mt-4 '>
                         <Button onClick={addBtn}  variant="contained" >Add Income</Button>
-                        <Button  variant="contained" className=''>Add Expenses</Button>
+                        <Button onClick={expensesBtn} variant="contained" className=''>Add Expenses</Button>
 
                     </div>
                 </form>
                 <ul>
+
+                    {History.map((item,index)=>(
+                        <li key={index} className={`flex justify-around flex-wrap py-2 text-gray-900 px-5 space-x-5 space-y-2 rounded-xl ${item.type == `income`? "bg-green-300": "bg-red-500"} `}>
+                            <h2>{item.TransactioTime}</h2>
+                            <h2>{item.TransactionDetails}</h2>
+                            <h2>${item.TransactionAmount}</h2>
+                        </li>
+                    ))}
                   
                     {/* <li className='flex justify-around bg-green-600 rounded-xl p-2 text-white font-bold *:'>
                         <p>Income</p>
