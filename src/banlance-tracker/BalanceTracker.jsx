@@ -18,6 +18,8 @@ const BalanceTracker = () => {
         setMainBalance(MainBalance + Number(TransactionAmount.current.value))
         setIncome(Income + Number(TransactionAmount.current.value))
         setHistory([...History,{type:`income`,TransactioTime:Time.toLocaleString(),TransactionAmount:Number(TransactionAmount.current.value),TransactionDetails:TransactionDetails.current.value}])
+        TransactionAmount.current.value=``
+        TransactionDetails.current.value=``
     }
     // Expenses money
     let expensesBtn = ()=>{
@@ -27,6 +29,8 @@ const BalanceTracker = () => {
             setMainBalance(MainBalance- Number(TransactionAmount.current.value))
             setExpenses(Expenses + Number(TransactionAmount.current.value))
             setHistory([...History,{type:`Expenses`,TransactioTime:Time.toLocaleString(),TransactionAmount:Number(TransactionAmount.current.value),TransactionDetails:TransactionDetails.current.value}])
+            TransactionAmount.current.value=``
+            TransactionDetails.current.value=``
        }
     }
 

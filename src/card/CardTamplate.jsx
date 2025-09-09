@@ -28,7 +28,7 @@ export default function MultiActionAreaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Link to={props.Linkfg}>
+        <Link to={props.Link}>
           <Button className='w-full' variant="contained" to={props.Link}>
           View Project
         </Button>
